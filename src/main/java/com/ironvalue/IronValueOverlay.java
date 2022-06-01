@@ -58,6 +58,8 @@ class IronValueOverlay extends Overlay
     private static final int SEED_VAULT_INVENTORY_ITEM_WIDGETID = WidgetInfo.SEED_VAULT_INVENTORY_ITEMS_CONTAINER.getPackedId();
     private static final int POH_TREASURE_CHEST_INVENTORY_ITEM_WIDGETID = WidgetInfo.POH_TREASURE_CHEST_INVENTORY_CONTAINER.getPackedId();
 
+    private static final int BLOOD_RUNE_SALE_PRICE = 200;
+
     private final Client client;
     private final IronValueConfig config;
     private final TooltipManager tooltipManager;
@@ -99,17 +101,14 @@ class IronValueOverlay extends Overlay
 
         switch (action)
         {
-            // TODO: Update these case names, see https://github.com/runelite/runelite/commit/c0a338519c33328157bb7173780fdcedd44f413d
-//            case SPELL_CAST_ON_WIDGET:
-//            case WIDGET_TARGET_ON_WIDGET:
+            case WIDGET_TARGET_ON_WIDGET:
                 // Check target widget is the inventory
-//                if (menuEntry.getType().getId() != WidgetInfo.INVENTORY.getId())
-//                {
-//                    break;
-//                }
-//                // FALLTHROUGH
-//            case ITEM_USE_ON_WIDGET:
-            // case WIDGET_USE_ON_ITEM:
+                if (menuEntry.getWidget().getId() != WidgetInfo.INVENTORY.getId())
+                {
+                    break;
+                }
+                // FALLTHROUGH
+            case WIDGET_USE_ON_ITEM:
                 // TODO: Add showWhileAlching config
 //                // Require showWhileAlching and Cast High Level Alchemy
 //                if (!config.showWhileAlching() || !isAlching)
@@ -126,11 +125,9 @@ class IronValueOverlay extends Overlay
             case ITEM_FIFTH_OPTION:
                 addTooltip(menuEntry, isAlching, groupId);
                 break;
-            default:
-//            case WIDGET_TYPE_2:
-//            case WIDGET_TARGET:
+            case WIDGET_TARGET:
                 // Check that this is the inventory
-                if (menuEntry.getType().getId() == WidgetInfo.INVENTORY.getId())
+                if (menuEntry.getWidget().getId() == WidgetInfo.INVENTORY.getId())
                 {
                     addTooltip(menuEntry, isAlching, groupId);
                 }
@@ -221,8 +218,13 @@ class IronValueOverlay extends Overlay
         int id = itemManager.canonicalize(item.getId());
         int qty = item.getQuantity();
 
-        // Special case for coins and platinum tokens
-        if (id == ItemID.COINS_995)
+        if (id == ItemID.BLOOD_RUNE)
+        {
+            return itemStringBuilder.append("Shop: ")
+                    .append(QuantityFormatter.formatNumber(qty * BLOOD_RUNE_SALE_PRICE))
+                    .append(" gp").toString();
+        }
+        else if (id == ItemID.COINS_995)
         {
             return QuantityFormatter.formatNumber(qty) + " gp";
         }
