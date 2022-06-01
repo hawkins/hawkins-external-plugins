@@ -220,8 +220,11 @@ class IronValueOverlay extends Overlay
 
         if (id == ItemID.BLOOD_RUNE)
         {
-            // TODO: Instead of a special case like coins here, send the shop value to stackValueText
-            return "Shop: " + QuantityFormatter.formatNumber(qty * BLOOD_RUNE_SALE_PRICE) + " gp";
+            if (config.showBloodRuneShopPrice())
+            {
+                // TODO: Instead of a special case like coins here, send the shop value to stackValueText
+                return "Shop: " + QuantityFormatter.formatNumber(qty * BLOOD_RUNE_SALE_PRICE) + " gp";
+            }
         }
         else if (id == ItemID.COINS_995)
         {
