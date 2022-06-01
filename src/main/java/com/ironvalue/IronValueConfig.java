@@ -4,16 +4,18 @@ import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
-@ConfigGroup("example")
+@ConfigGroup("ironvalue")
 public interface IronValueConfig extends Config
 {
 	@ConfigItem(
-		keyName = "greeting",
-		name = "Welcome Greeting",
-		description = "The message to show to the user when they login"
+		keyName = "showBloodRuneShopPrice",
+		name = "Show Blood Rune Shop Price",
+		description = "Blood Rune shop price on a tooltip"
 	)
-	default String greeting()
+	default boolean showBloodRuneShopPrice()
 	{
-		return "Hello";
+		return true;
 	}
 }
+
+
