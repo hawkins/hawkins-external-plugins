@@ -10,7 +10,7 @@ public interface IronValueConfig extends Config
 	@ConfigItem(
 		keyName = "showBloodRuneShopPrice",
 		name = "Show Blood Rune Shop Price",
-		description = "Blood Rune shop price on a tooltip"
+		description = "Show the Blood Rune shop price when selling to Ali Morrisane on a tooltip"
 	)
 	default boolean showBloodRuneShopPrice()
 	{
