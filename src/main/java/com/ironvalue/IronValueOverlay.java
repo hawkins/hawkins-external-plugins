@@ -29,11 +29,9 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.inject.Inject;
 
-import com.ironvalue.IronValueConfig;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
-import net.runelite.api.ItemComposition;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.ItemID;
 import net.runelite.api.MenuAction;
@@ -63,7 +61,6 @@ class IronValueOverlay extends Overlay
     private final Client client;
     private final IronValueConfig config;
     private final TooltipManager tooltipManager;
-    private final StringBuilder itemStringBuilder = new StringBuilder();
 
     @Inject
     ItemManager itemManager;
@@ -97,7 +94,6 @@ class IronValueOverlay extends Overlay
         final MenuAction action = menuEntry.getType();
         final int widgetId = menuEntry.getParam1();
         final int groupId = WidgetInfo.TO_GROUP(widgetId);
-        final boolean isAlching = menuEntry.getOption().equals("Cast") && menuEntry.getTarget().contains("High Level Alchemy");
 
         switch (action)
         {
@@ -109,13 +105,6 @@ class IronValueOverlay extends Overlay
                 }
                 // FALLTHROUGH
             case WIDGET_USE_ON_ITEM:
-                // TODO: Add showWhileAlching config
-//                // Require showWhileAlching and Cast High Level Alchemy
-//                if (!config.showWhileAlching() || !isAlching)
-//                {
-//                    break;
-//                }
-//                // FALLTHROUGH
             case CC_OP:
             case ITEM_USE:
             case ITEM_FIRST_OPTION:
@@ -123,41 +112,30 @@ class IronValueOverlay extends Overlay
             case ITEM_THIRD_OPTION:
             case ITEM_FOURTH_OPTION:
             case ITEM_FIFTH_OPTION:
-                addTooltip(menuEntry, isAlching, groupId);
+                addTooltip(menuEntry, groupId);
                 break;
             case WIDGET_TARGET:
                 // Check that this is the inventory
                 if (menuEntry.getWidget().getId() == WidgetInfo.INVENTORY.getId())
                 {
-                    addTooltip(menuEntry, isAlching, groupId);
+                    addTooltip(menuEntry, groupId);
                 }
         }
 
         return null;
     }
 
-    private void addTooltip(MenuEntry menuEntry, boolean isAlching, int groupId)
+    private void addTooltip(MenuEntry menuEntry, int groupId)
     {
         // Item tooltip values
         switch (groupId)
         {
-            case WidgetID.EXPLORERS_RING_ALCH_GROUP_ID:
-//                if (!config.showWhileAlching())
-//                {
-//                    return;
-//                }
             case WidgetID.INVENTORY_GROUP_ID:
             case WidgetID.POH_TREASURE_CHEST_INVENTORY_GROUP_ID:
-//                if (config.hideInventory() && (!config.showWhileAlching() || !isAlching))
-//                {
-//                    return;
-//                }
-                // FALLTHROUGH
             case WidgetID.BANK_GROUP_ID:
             case WidgetID.BANK_INVENTORY_GROUP_ID:
             case WidgetID.SEED_VAULT_GROUP_ID:
             case WidgetID.SEED_VAULT_INVENTORY_GROUP_ID:
-                // Make tooltip
                 final String text = makeValueTooltip(menuEntry);
                 if (text != null)
                 {
@@ -168,12 +146,6 @@ class IronValueOverlay extends Overlay
 
     private String makeValueTooltip(MenuEntry menuEntry)
     {
-//        // Disabling both disables all value tooltips
-//        if (!config.showGEPrice() && !config.showHAValue())
-//        {
-//            return null;
-//        }
-
         final int widgetId = menuEntry.getParam1();
         ItemContainer container = null;
 
@@ -218,88 +190,11 @@ class IronValueOverlay extends Overlay
         int id = itemManager.canonicalize(item.getId());
         int qty = item.getQuantity();
 
-        if (id == ItemID.BLOOD_RUNE)
+        if (id == ItemID.BLOOD_RUNE && config.showBloodRuneShopPrice())
         {
-            if (config.showBloodRuneShopPrice())
-            {
-                // TODO: Instead of a special case like coins here, send the shop value to stackValueText
-                return "Shop: " + QuantityFormatter.formatNumber(qty * BLOOD_RUNE_SALE_PRICE) + " gp";
-            }
-        }
-        else if (id == ItemID.COINS_995)
-        {
-            return QuantityFormatter.formatNumber(qty) + " gp";
-        }
-        else if (id == ItemID.PLATINUM_TOKEN)
-        {
-            return QuantityFormatter.formatNumber(qty * 1000L) + " gp";
-        }
-
-        ItemComposition itemDef = itemManager.getItemComposition(id);
-
-        // Only check prices for things with store prices
-        if (itemDef.getPrice() <= 0)
-        {
-            return null;
-        }
-
-        int gePrice = 0;
-        int haPrice = 0;
-        int haProfit = 0;
-        final int itemHaPrice = itemDef.getHaPrice();
-
-//        if (config.showGEPrice())
-//        {
-//            gePrice = itemManager.getItemPrice(id);
-//        }
-//        if (config.showHAValue())
-//        {
-//            haPrice = itemHaPrice;
-//        }
-
-        if (gePrice > 0 || haPrice > 0)
-        {
-            return stackValueText(qty, gePrice, haPrice, haProfit);
+            return "Shop: " + QuantityFormatter.formatNumber((long) qty * BLOOD_RUNE_SALE_PRICE) + " gp";
         }
 
         return null;
-    }
-
-    private String stackValueText(int qty, int gePrice, int haValue, int haProfit)
-    {
-        if (gePrice > 0)
-        {
-            itemStringBuilder.append("GE: ")
-                    .append(QuantityFormatter.quantityToStackSize((long) gePrice * qty))
-                    .append(" gp");
-//            if (config.showEA() && qty > 1)
-//            {
-//                itemStringBuilder.append(" (")
-//                        .append(QuantityFormatter.quantityToStackSize(gePrice))
-//                        .append(" ea)");
-//            }
-        }
-        if (haValue > 0)
-        {
-            if (gePrice > 0)
-            {
-                itemStringBuilder.append("</br>");
-            }
-
-            itemStringBuilder.append("HA: ")
-                    .append(QuantityFormatter.quantityToStackSize((long) haValue * qty))
-                    .append(" gp");
-//            if (config.showEA() && qty > 1)
-//            {
-//                itemStringBuilder.append(" (")
-//                        .append(QuantityFormatter.quantityToStackSize(haValue))
-//                        .append(" ea)");
-//            }
-        }
-
-        // Build string and reset builder
-        final String text = itemStringBuilder.toString();
-        itemStringBuilder.setLength(0);
-        return text;
     }
 }
