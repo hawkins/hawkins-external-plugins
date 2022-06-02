@@ -192,7 +192,7 @@ class IronValueOverlay extends Overlay
 
         if (id == ItemID.BLOOD_RUNE && config.showBloodRuneShopPrice())
         {
-            return "Shop: " + QuantityFormatter.formatNumber((long) qty * BLOOD_RUNE_SALE_PRICE) + " gp";
+            return "Shop: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_SALE_PRICE) + " gp";
         }
 
         return null;
