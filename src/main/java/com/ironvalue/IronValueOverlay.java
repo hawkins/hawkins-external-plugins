@@ -195,7 +195,8 @@ class IronValueOverlay extends Overlay
         {
             return "Ali: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_SALE_PRICE) + " gp";
         }
-        if (id == ItemID.MINNOW && config.showMinnowSharkConversion()) {
+        if (id == ItemID.MINNOW && config.showMinnowSharkConversion())
+        {
             return "Kylie: " + QuantityFormatter.quantityToStackSize((long) qty / MINNOWS_PER_SHARK) + " sharks";
         }
 
