@@ -34,7 +34,9 @@ import net.runelite.client.ui.overlay.OverlayManager;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Iron Value"
+	name = "Iron Value",
+	description = "Item Values for Iron Players",
+	tags = {"iron", "item", "value", "price", "blood", "bank", "inventory", "overlay", "tooltips"}
 )
 public class IronValuePlugin extends Plugin
 {
