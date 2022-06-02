@@ -40,6 +40,16 @@ public interface IronValueConfig extends Config
 	{
 		return true;
 	}
+
+	@ConfigItem(
+			keyName = "showMinnowSharkConversion",
+			name = "Show Minnow to Shark Exchange",
+			description = "Show the Minnow to Shark exchange price when trading Kylie Minnow on a tooltip"
+	)
+	default boolean showMinnowSharkConversion()
+	{
+		return true;
+	}
 }
 
 

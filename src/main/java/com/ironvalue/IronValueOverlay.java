@@ -57,6 +57,7 @@ class IronValueOverlay extends Overlay
     private static final int POH_TREASURE_CHEST_INVENTORY_ITEM_WIDGETID = WidgetInfo.POH_TREASURE_CHEST_INVENTORY_CONTAINER.getPackedId();
 
     private static final int BLOOD_RUNE_SALE_PRICE = 200;
+    private static final int MINNOWS_PER_SHARK = 40;
 
     private final Client client;
     private final IronValueConfig config;
@@ -192,7 +193,10 @@ class IronValueOverlay extends Overlay
 
         if (id == ItemID.BLOOD_RUNE && config.showBloodRuneShopPrice())
         {
-            return "Shop: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_SALE_PRICE) + " gp";
+            return "Ali: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_SALE_PRICE) + " gp";
+        }
+        if (id == ItemID.MINNOW && config.showMinnowSharkConversion()) {
+            return "Kylie: " + QuantityFormatter.quantityToStackSize((long) qty / MINNOWS_PER_SHARK) + " sharks";
         }
 
         return null;
