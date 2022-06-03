@@ -27,28 +27,86 @@ package com.ironvalue;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.ConfigSection;
 
 @ConfigGroup("ironvalue")
 public interface IronValueConfig extends Config
 {
+
+	@ConfigSection(
+			name = "Gold Prices",
+			description = "Item prices when selling for gold",
+			position = 0
+	)
+	String goldPrices = "goldPrices";
+
 	@ConfigItem(
 		keyName = "showBloodRuneShopPrice",
 		name = "Show Blood Rune Shop Price",
-		description = "Show the Blood Rune shop price when selling to Ali Morrisane on a tooltip"
+		description = "Show the Blood Rune shop price when selling to Ali Morrisane on a tooltip",
+		section = goldPrices
 	)
 	default boolean showBloodRuneShopPrice()
 	{
 		return true;
 	}
 
+	@ConfigSection(
+			name = "Commodity Exchanges",
+			description = "Item prices when exchanging for other commodities",
+			position = 1
+	)
+	String commodityExchanges = "commodityExchanges";
+
 	@ConfigItem(
 			keyName = "showMinnowSharkConversion",
 			name = "Show Minnow to Shark Exchange",
-			description = "Show the Minnow to Shark exchange price when trading Kylie Minnow on a tooltip"
+			description = "Show the Minnow to Shark exchange price when trading Kylie Minnow on a tooltip",
+			section = commodityExchanges
 	)
 	default boolean showMinnowSharkConversion()
 	{
 		return true;
+	}
+
+	@ConfigSection(
+			name = "Tokkul Prices",
+			description = "Item prices and sale settings when selling for Tokkul",
+			position = 2
+	)
+	String tokkulPrices = "tokkulPrices";
+
+	@ConfigItem(
+			keyName = "tokkulKaramjaGloves",
+			name = "Use Karamja Glove Price",
+			description = "Calculate sale price when wearing Karamja gloves",
+			section = tokkulPrices
+	)
+	default boolean tokkulKaramjaGloves()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "showChaosRuneTokkulPrice",
+			name = "Show Chaos Rune to Tokkul Price",
+			description = "Show the Chaos Rune to Tokkul shop price when selling to TzHaar-Mej-Roh on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showChaosRuneTokkulPrice()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "tokkulItemsSoldPerHop",
+			name = "Items to Sell each World",
+			description = "Number of items to sell on each world before hopping to the next",
+			section = tokkulPrices
+	)
+	default int tokkulItemsSoldPerHop()
+	{
+		return 150;
 	}
 }
 
