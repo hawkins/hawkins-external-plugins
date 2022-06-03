@@ -29,13 +29,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.inject.Inject;
 
-import net.runelite.api.Client;
-import net.runelite.api.InventoryID;
-import net.runelite.api.Item;
-import net.runelite.api.ItemContainer;
-import net.runelite.api.ItemID;
-import net.runelite.api.MenuAction;
-import net.runelite.api.MenuEntry;
+import net.runelite.api.*;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.game.ItemManager;
@@ -57,6 +51,8 @@ class IronValueOverlay extends Overlay
     private static final int POH_TREASURE_CHEST_INVENTORY_ITEM_WIDGETID = WidgetInfo.POH_TREASURE_CHEST_INVENTORY_CONTAINER.getPackedId();
 
     private static final int BLOOD_RUNE_SALE_PRICE = 200;
+    private static final int CHAOS_RUNE_TOKKUL_SALE_PRICE = 13;
+    private static final int CHAOS_RUNE_TOKKUL_GLOVE_SALE_PRICE = 31;
     private static final int MINNOWS_PER_SHARK = 40;
 
     private final Client client;
@@ -190,6 +186,7 @@ class IronValueOverlay extends Overlay
     {
         int id = itemManager.canonicalize(item.getId());
         int qty = item.getQuantity();
+        ItemComposition itemDef = itemManager.getItemComposition(id);
 
         if (id == ItemID.BLOOD_RUNE && config.showBloodRuneShopPrice())
         {
@@ -199,7 +196,37 @@ class IronValueOverlay extends Overlay
         {
             return "Kylie: " + QuantityFormatter.quantityToStackSize((long) qty / MINNOWS_PER_SHARK) + " sharks";
         }
+        if (id == ItemID.CHAOS_RUNE && config.showChaosRuneTokkulPrice())
+        {
+            int chaos_rune_sale_price = CHAOS_RUNE_TOKKUL_SALE_PRICE;
+            if (config.tokkulKaramjaGloves())
+            {
+                chaos_rune_sale_price = CHAOS_RUNE_TOKKUL_GLOVE_SALE_PRICE;
+            }
+
+            return "Mej-Roh: " + QuantityFormatter.quantityToStackSize(getTotalShopSales(itemDef.getPrice(), chaos_rune_sale_price, qty)) + " tokkul";
+        }
 
         return null;
+    }
+
+    private long getShopSalePrice(int itemPrice, long basePrice, long numberAlreadySold)
+    {
+        long theoreticalPrice = basePrice - (long) (0.02 * basePrice * numberAlreadySold);
+        return Math.max(theoreticalPrice, (int) 0.1 * itemPrice);
+    }
+
+    private long getTotalShopSales(int itemPrice, long basePrice, long numberToSell)
+    {
+        long totalSales = 0;
+        long counter = 0;
+        long itemsPerHop = config.tokkulItemsSoldPerHop();
+        while (counter < numberToSell)
+        {
+            totalSales += getShopSalePrice(itemPrice, basePrice, counter % itemsPerHop);
+            counter++;
+        }
+
+        return totalSales;
     }
 }
