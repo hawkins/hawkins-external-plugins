@@ -51,6 +51,17 @@ public interface IronValueConfig extends Config
 		return true;
 	}
 
+	@ConfigItem(
+			keyName = "showDeathRuneShopPrice",
+			name = "Show Death Rune Shop Price",
+			description = "Show the Death Rune shop price when selling to Ali Morrisane on a tooltip",
+			section = goldPrices
+	)
+	default boolean showDeathRuneShopPrice()
+	{
+		return true;
+	}
+
 	@ConfigSection(
 			name = "Commodity Exchanges",
 			description = "Item prices when exchanging for other commodities",
@@ -77,49 +88,22 @@ public interface IronValueConfig extends Config
 	String tokkulPrices = "tokkulPrices";
 
 	@ConfigItem(
-			keyName = "tokkulKaramjaGloves",
-			name = "Use Karamja Glove Price",
-			description = "Calculate sale price when wearing Karamja gloves",
-			section = tokkulPrices,
-			position = 0
-	)
-	default boolean tokkulKaramjaGloves()
-	{
-		return true;
-	}
-
-	@ConfigItem(
-			keyName = "tokkulHopForSales",
-			name = "Hop Between Sales",
-			description = "Whether to hop between sales for tokkul for better prices per item",
-			section = tokkulPrices,
-			position = 1
-	)
-	default boolean tokkulHopForSales()
-	{
-		return false;
-	}
-
-	@ConfigItem(
-			keyName = "tokkulItemsSoldPerHop",
-			name = "Items to Sell each World",
-			description = "Number of items to sell on each world before hopping to the next",
-			section = tokkulPrices,
-			position = 2
-	)
-	default int tokkulItemsSoldPerHop()
-	{
-		return 150;
-	}
-
-	@ConfigItem(
 			keyName = "showChaosRuneTokkulPrice",
 			name = "Show Chaos Rune to Tokkul Price",
 			description = "Show the Chaos Rune to Tokkul shop price when selling to TzHaar-Mej-Roh on a tooltip",
-			section = tokkulPrices,
-			position = 3
+			section = tokkulPrices
 	)
 	default boolean showChaosRuneTokkulPrice()
+	{
+		return true;
+	}
+	@ConfigItem(
+			keyName = "showDeathRunePrice",
+			name = "Show Death Rune to Tokkul Price",
+			description = "Show the Death Rune to Tokkul shop price when selling to TzHaar-Mej-Roh on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showDeathRuneTokkulPrice()
 	{
 		return true;
 	}

@@ -50,9 +50,10 @@ class IronValueOverlay extends Overlay
     private static final int SEED_VAULT_INVENTORY_ITEM_WIDGETID = WidgetInfo.SEED_VAULT_INVENTORY_ITEMS_CONTAINER.getPackedId();
     private static final int POH_TREASURE_CHEST_INVENTORY_ITEM_WIDGETID = WidgetInfo.POH_TREASURE_CHEST_INVENTORY_CONTAINER.getPackedId();
 
-    private static final int BLOOD_RUNE_SALE_PRICE = 200;
-    private static final int CHAOS_RUNE_TOKKUL_SALE_PRICE = 13;
-    private static final int CHAOS_RUNE_TOKKUL_GLOVE_SALE_PRICE = 31;
+    private static final int BLOOD_RUNE_GP_SALE_PRICE = 200;
+    private static final int DEATH_RUNE_GP_SALE_PRICE = 90;
+    private static final int CHAOS_RUNE_TOKKUL_SALE_PRICE = 9;
+    private static final int DEATH_RUNE_TOKKUL_SALE_PRICE = 18;
     private static final int MINNOWS_PER_SHARK = 40;
 
     private final Client client;
@@ -190,7 +191,11 @@ class IronValueOverlay extends Overlay
 
         if (id == ItemID.BLOOD_RUNE && config.showBloodRuneShopPrice())
         {
-            return "Ali: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_SALE_PRICE) + " gp";
+            return "Ali: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_GP_SALE_PRICE) + " gp";
+        }
+        if (id == ItemID.DEATH_RUNE && config.showDeathRuneShopPrice())
+        {
+            return "Ali: " + QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_GP_SALE_PRICE) + " gp";
         }
         if (id == ItemID.MINNOW && config.showMinnowSharkConversion())
         {
@@ -198,42 +203,13 @@ class IronValueOverlay extends Overlay
         }
         if (id == ItemID.CHAOS_RUNE && config.showChaosRuneTokkulPrice())
         {
-            int chaos_rune_sale_price = CHAOS_RUNE_TOKKUL_SALE_PRICE;
-            if (config.tokkulKaramjaGloves())
-            {
-                chaos_rune_sale_price = CHAOS_RUNE_TOKKUL_GLOVE_SALE_PRICE;
-            }
-
-            return "Mej-Roh: " + QuantityFormatter.quantityToStackSize(getTotalShopSales(itemDef.getPrice(), chaos_rune_sale_price, qty)) + " tokkul";
+            return "Mej-Roh: " + QuantityFormatter.quantityToStackSize((long) qty * CHAOS_RUNE_TOKKUL_SALE_PRICE) + " tokkul";
+        }
+        if (id == ItemID.DEATH_RUNE && config.showDeathRuneTokkulPrice())
+        {
+            return "Mej-Roh: " + QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_TOKKUL_SALE_PRICE) + " tokkul";
         }
 
         return null;
-    }
-
-    private long getShopSalePrice(int itemPrice, long basePrice, long numberAlreadySold)
-    {
-        long theoreticalPrice = basePrice - (long) (0.02 * basePrice * numberAlreadySold);
-        return Math.max(theoreticalPrice, (int) 0.1 * itemPrice);
-    }
-
-    private long getTotalShopSales(int itemPrice, long basePrice, long numberToSell)
-    {
-        long totalSales = 0;
-        long counter = 0;
-        int itemsPerHop = config.tokkulItemsSoldPerHop();
-
-        while (counter < numberToSell)
-        {
-            if (config.tokkulHopForSales())
-            {
-                totalSales += getShopSalePrice(itemPrice, basePrice, counter % itemsPerHop);
-            } else
-            {
-                totalSales += getShopSalePrice(itemPrice, basePrice, counter);
-            }
-            counter++;
-        }
-
-        return totalSales;
     }
 }
