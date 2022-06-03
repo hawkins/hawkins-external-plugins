@@ -188,7 +188,6 @@ class IronValueOverlay extends Overlay
     {
         int id = itemManager.canonicalize(item.getId());
         int qty = item.getQuantity();
-        ItemComposition itemDef = itemManager.getItemComposition(id);
 
         stringBuilder.setLength(0);
 
