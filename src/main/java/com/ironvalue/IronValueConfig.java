@@ -80,7 +80,8 @@ public interface IronValueConfig extends Config
 			keyName = "tokkulKaramjaGloves",
 			name = "Use Karamja Glove Price",
 			description = "Calculate sale price when wearing Karamja gloves",
-			section = tokkulPrices
+			section = tokkulPrices,
+			position = 0
 	)
 	default boolean tokkulKaramjaGloves()
 	{
@@ -88,25 +89,39 @@ public interface IronValueConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "showChaosRuneTokkulPrice",
-			name = "Show Chaos Rune to Tokkul Price",
-			description = "Show the Chaos Rune to Tokkul shop price when selling to TzHaar-Mej-Roh on a tooltip",
-			section = tokkulPrices
+			keyName = "tokkulHopForSales",
+			name = "Hop Between Sales",
+			description = "Whether to hop between sales for tokkul for better prices per item",
+			section = tokkulPrices,
+			position = 1
 	)
-	default boolean showChaosRuneTokkulPrice()
+	default boolean tokkulHopForSales()
 	{
-		return true;
+		return false;
 	}
 
 	@ConfigItem(
 			keyName = "tokkulItemsSoldPerHop",
 			name = "Items to Sell each World",
 			description = "Number of items to sell on each world before hopping to the next",
-			section = tokkulPrices
+			section = tokkulPrices,
+			position = 2
 	)
 	default int tokkulItemsSoldPerHop()
 	{
 		return 150;
+	}
+
+	@ConfigItem(
+			keyName = "showChaosRuneTokkulPrice",
+			name = "Show Chaos Rune to Tokkul Price",
+			description = "Show the Chaos Rune to Tokkul shop price when selling to TzHaar-Mej-Roh on a tooltip",
+			section = tokkulPrices,
+			position = 3
+	)
+	default boolean showChaosRuneTokkulPrice()
+	{
+		return true;
 	}
 }
 

@@ -220,10 +220,17 @@ class IronValueOverlay extends Overlay
     {
         long totalSales = 0;
         long counter = 0;
-        long itemsPerHop = config.tokkulItemsSoldPerHop();
+        int itemsPerHop = config.tokkulItemsSoldPerHop();
+
         while (counter < numberToSell)
         {
-            totalSales += getShopSalePrice(itemPrice, basePrice, counter % itemsPerHop);
+            if (config.tokkulHopForSales())
+            {
+                totalSales += getShopSalePrice(itemPrice, basePrice, counter % itemsPerHop);
+            } else
+            {
+                totalSales += getShopSalePrice(itemPrice, basePrice, counter);
+            }
             counter++;
         }
 
