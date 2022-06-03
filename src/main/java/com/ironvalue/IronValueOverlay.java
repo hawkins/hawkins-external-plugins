@@ -29,13 +29,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import javax.inject.Inject;
 
-import net.runelite.api.Client;
-import net.runelite.api.InventoryID;
-import net.runelite.api.Item;
-import net.runelite.api.ItemContainer;
-import net.runelite.api.ItemID;
-import net.runelite.api.MenuAction;
-import net.runelite.api.MenuEntry;
+import net.runelite.api.*;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.game.ItemManager;
@@ -56,12 +50,16 @@ class IronValueOverlay extends Overlay
     private static final int SEED_VAULT_INVENTORY_ITEM_WIDGETID = WidgetInfo.SEED_VAULT_INVENTORY_ITEMS_CONTAINER.getPackedId();
     private static final int POH_TREASURE_CHEST_INVENTORY_ITEM_WIDGETID = WidgetInfo.POH_TREASURE_CHEST_INVENTORY_CONTAINER.getPackedId();
 
-    private static final int BLOOD_RUNE_SALE_PRICE = 200;
+    private static final int BLOOD_RUNE_GP_SALE_PRICE = 200;
+    private static final int DEATH_RUNE_GP_SALE_PRICE = 90;
+    private static final int CHAOS_RUNE_TOKKUL_SALE_PRICE = 9;
+    private static final int DEATH_RUNE_TOKKUL_SALE_PRICE = 18;
     private static final int MINNOWS_PER_SHARK = 40;
 
     private final Client client;
     private final IronValueConfig config;
     private final TooltipManager tooltipManager;
+    private final StringBuilder stringBuilder = new StringBuilder();
 
     @Inject
     ItemManager itemManager;
@@ -186,18 +184,48 @@ class IronValueOverlay extends Overlay
         return null;
     }
 
+    private void addLineToOutput(String line) {
+        if (stringBuilder.length() > 0)
+        {
+            stringBuilder.append("</br>");
+        }
+
+        stringBuilder.append(line);
+    }
+
     private String getItemStackValueText(Item item)
     {
         int id = itemManager.canonicalize(item.getId());
         int qty = item.getQuantity();
 
+        stringBuilder.setLength(0);
+
         if (id == ItemID.BLOOD_RUNE && config.showBloodRuneShopPrice())
         {
-            return "Ali: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_SALE_PRICE) + " gp";
+            addLineToOutput("Ali: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_GP_SALE_PRICE) + " gp");
+        }
+        if (id == ItemID.DEATH_RUNE && config.showDeathRuneShopPrice())
+        {
+            addLineToOutput("Ali: " + QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_GP_SALE_PRICE) + " gp");
         }
         if (id == ItemID.MINNOW && config.showMinnowSharkConversion())
         {
-            return "Kylie: " + QuantityFormatter.quantityToStackSize((long) qty / MINNOWS_PER_SHARK) + " sharks";
+            addLineToOutput("Kylie: " + QuantityFormatter.quantityToStackSize((long) qty / MINNOWS_PER_SHARK) + " sharks");
+        }
+        if (id == ItemID.CHAOS_RUNE && config.showChaosRuneTokkulPrice())
+        {
+            addLineToOutput("Mej-Roh: " + QuantityFormatter.quantityToStackSize((long) qty * CHAOS_RUNE_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+        if (id == ItemID.DEATH_RUNE && config.showDeathRuneTokkulPrice())
+        {
+            addLineToOutput("Mej-Roh: " + QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+
+        if (stringBuilder.length() > 0)
+        {
+            final String result = stringBuilder.toString();
+            stringBuilder.setLength(0);
+            return result;
         }
 
         return null;

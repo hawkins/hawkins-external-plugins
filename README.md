@@ -8,5 +8,16 @@ I.e., the High Alch price for a Blood Rune is 240 GP, but realistically, an Iron
 
 # Features
 
-- Blood rune price tooltip
-- Minnow to shark price tooltip
+## Gold price tooltips
+
+- Blood runes
+- Death runes
+
+## Commodity exchange tooltips
+
+- Minnows to sharks
+
+## Tokkul price tooltips
+
+- Chaos runes
+- Death runes
