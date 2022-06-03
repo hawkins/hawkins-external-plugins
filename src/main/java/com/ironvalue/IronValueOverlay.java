@@ -59,6 +59,7 @@ class IronValueOverlay extends Overlay
     private final Client client;
     private final IronValueConfig config;
     private final TooltipManager tooltipManager;
+    private final StringBuilder stringBuilder = new StringBuilder();
 
     @Inject
     ItemManager itemManager;
@@ -189,25 +190,64 @@ class IronValueOverlay extends Overlay
         int qty = item.getQuantity();
         ItemComposition itemDef = itemManager.getItemComposition(id);
 
+        stringBuilder.setLength(0);
+
         if (id == ItemID.BLOOD_RUNE && config.showBloodRuneShopPrice())
         {
-            return "Ali: " + QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_GP_SALE_PRICE) + " gp";
+            if (stringBuilder.length() > 0)
+            {
+                stringBuilder.append("</br>");
+            }
+            stringBuilder.append("Ali: ");
+            stringBuilder.append(QuantityFormatter.quantityToStackSize((long) qty * BLOOD_RUNE_GP_SALE_PRICE));
+            stringBuilder.append(" gp");
         }
         if (id == ItemID.DEATH_RUNE && config.showDeathRuneShopPrice())
         {
-            return "Ali: " + QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_GP_SALE_PRICE) + " gp";
+            if (stringBuilder.length() > 0)
+            {
+                stringBuilder.append("</br>");
+            }
+            stringBuilder.append("Ali: ");
+            stringBuilder.append(QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_GP_SALE_PRICE));
+            stringBuilder.append(" gp");
         }
         if (id == ItemID.MINNOW && config.showMinnowSharkConversion())
         {
-            return "Kylie: " + QuantityFormatter.quantityToStackSize((long) qty / MINNOWS_PER_SHARK) + " sharks";
+            if (stringBuilder.length() > 0)
+            {
+                stringBuilder.append("</br>");
+            }
+            stringBuilder.append("Kylie: ");
+            stringBuilder.append(QuantityFormatter.quantityToStackSize((long) qty / MINNOWS_PER_SHARK));
+            stringBuilder.append(" sharks");
         }
         if (id == ItemID.CHAOS_RUNE && config.showChaosRuneTokkulPrice())
         {
-            return "Mej-Roh: " + QuantityFormatter.quantityToStackSize((long) qty * CHAOS_RUNE_TOKKUL_SALE_PRICE) + " tokkul";
+            if (stringBuilder.length() > 0)
+            {
+                stringBuilder.append("</br>");
+            }
+            stringBuilder.append("Mej-Roh: ");
+            stringBuilder.append(QuantityFormatter.quantityToStackSize((long) qty * CHAOS_RUNE_TOKKUL_SALE_PRICE));
+            stringBuilder.append(" tokkul");
         }
         if (id == ItemID.DEATH_RUNE && config.showDeathRuneTokkulPrice())
         {
-            return "Mej-Roh: " + QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_TOKKUL_SALE_PRICE) + " tokkul";
+            if (stringBuilder.length() > 0)
+            {
+                stringBuilder.append("</br>");
+            }
+            stringBuilder.append("Mej-Roh: ");
+            stringBuilder.append(QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_TOKKUL_SALE_PRICE));
+            stringBuilder.append(" tokkul");
+        }
+
+        if (stringBuilder.length() > 0)
+        {
+            final String result = stringBuilder.toString();
+            stringBuilder.setLength(0);
+            return result;
         }
 
         return null;
