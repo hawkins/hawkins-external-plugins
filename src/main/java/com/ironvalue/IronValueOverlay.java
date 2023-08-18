@@ -56,6 +56,11 @@ class IronValueOverlay extends Overlay
     private static final int DEATH_RUNE_TOKKUL_SALE_PRICE = 18;
     private static final int MINNOWS_PER_SHARK = 40;
 
+    private static final int STAMINAS_PER_GRACE = 10;
+    private static final int GRACE_PER_EXCHANGE = 10;
+    private static final int AMYLASE_PER_EXCHANGE = 100;
+
+
     private final Client client;
     private final IronValueConfig config;
     private final TooltipManager tooltipManager;
@@ -211,6 +216,11 @@ class IronValueOverlay extends Overlay
         if (id == ItemID.MINNOW && config.showMinnowSharkConversion())
         {
             addLineToOutput("Kylie: " + QuantityFormatter.quantityToStackSize((long) qty / MINNOWS_PER_SHARK) + " sharks");
+        }
+        if (id == ItemID.MARK_OF_GRACE && config.showMarkOfGraceStaminaConversion()) {
+            long true_amylase = (long) (Math.floor((double) qty / GRACE_PER_EXCHANGE) * AMYLASE_PER_EXCHANGE);
+            double approximate_amylase = qty * STAMINAS_PER_GRACE;
+            addLineToOutput("Grace: " + QuantityFormatter.quantityToStackSize((long) approximate_amylase) + " (" + QuantityFormatter.quantityToStackSize(true_amylase) + ") stamina doses");
         }
         if (id == ItemID.CHAOS_RUNE && config.showChaosRuneTokkulPrice())
         {

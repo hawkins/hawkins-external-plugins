@@ -80,6 +80,17 @@ public interface IronValueConfig extends Config
 		return true;
 	}
 
+	@ConfigItem(
+			keyName = "showMarkOfGraceStaminaConversion",
+			name = "Show Marks of Grace to Stamina Doses",
+			description = "Show the Mark of Grace to Stamina Potion dose exchange rate on a tooltip",
+			section = commodityExchanges
+	)
+	default boolean showMarkOfGraceStaminaConversion()
+	{
+		return true;
+	}
+
 	@ConfigSection(
 			name = "Tokkul Prices",
 			description = "Item prices and sale settings when selling for Tokkul",
