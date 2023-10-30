@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Charlie Waters
+ * Copyright (c) 2018, Charlie Waters, Josh Hawkins
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,9 +56,14 @@ class IronValueOverlay extends Overlay
     private static final int DEATH_RUNE_TOKKUL_SALE_PRICE = 18;
     private static final int MINNOWS_PER_SHARK = 40;
 
-    private static final int STAMINAS_PER_GRACE = 10;
+
+    private static final int STARDUST_PER_EXCHANGE = 300;
+    private static final int UNCUT_GEMS_PER_EXCHANGE = 40;
+    private static final float UNCUT_GEMS_PER_STARDUST = UNCUT_GEMS_PER_EXCHANGE / STARDUST_PER_EXCHANGE;
+
     private static final int GRACE_PER_EXCHANGE = 10;
     private static final int AMYLASE_PER_EXCHANGE = 100;
+    private static final int STAMINAS_PER_GRACE = AMYLASE_PER_EXCHANGE / GRACE_PER_EXCHANGE;
 
 
     private final Client client;
@@ -221,6 +226,11 @@ class IronValueOverlay extends Overlay
             long true_amylase = (long) (Math.floor((double) qty / GRACE_PER_EXCHANGE) * AMYLASE_PER_EXCHANGE);
             double approximate_amylase = qty * STAMINAS_PER_GRACE;
             addLineToOutput("Grace: " + QuantityFormatter.quantityToStackSize((long) approximate_amylase) + " (" + QuantityFormatter.quantityToStackSize(true_amylase) + ") stamina doses");
+        }
+        if (id == ItemID.STARDUST && config.showStardustGemConversion()) {
+            long true_gems = (long) (Math.floor((double) qty / STARDUST_PER_EXCHANGE) * UNCUT_GEMS_PER_EXCHANGE);
+            double approximate_gems = qty * UNCUT_GEMS_PER_STARDUST;
+            addLineToOutput("Dusuri: " + QuantityFormatter.quantityToStackSize((long) approximate_gems) + " (" + QuantityFormatter.quantityToStackSize(true_gems) + ") uncut gems");
         }
         if (id == ItemID.CHAOS_RUNE && config.showChaosRuneTokkulPrice())
         {

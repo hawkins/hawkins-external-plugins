@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Charlie Waters
+ * Copyright (c) 2018, Charlie Waters, Josh Hawkins
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -91,6 +91,13 @@ public interface IronValueConfig extends Config
 		return true;
 	}
 
+	@ConfigItem(
+			keyName = "showStardustGemConversion",
+			name = "Show Stardust to Uncut Gems",
+			description = "Show the Stardust to Uncut Gem exchange rate on a tooltip",
+			section = commodityExchanges
+	)
+	default boolean showStardustGemConversion() { return true; }
 	@ConfigSection(
 			name = "Tokkul Prices",
 			description = "Item prices and sale settings when selling for Tokkul",

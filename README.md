@@ -17,6 +17,7 @@ I.e., the High Alch price for a Blood Rune is 240 GP, but realistically, an Iron
 
 - Minnows to sharks
 - Marks of Grace to stamina doses / amylase crystals
+- Stardust to Uncut Gems
 
 ## Tokkul price tooltips
 
