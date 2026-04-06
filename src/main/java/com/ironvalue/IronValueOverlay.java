@@ -52,6 +52,7 @@ class IronValueOverlay extends Overlay
 
     private static final int BLOOD_RUNE_GP_SALE_PRICE = 200;
     private static final int DEATH_RUNE_GP_SALE_PRICE = 90;
+    private static final int NATURE_RUNE_GP_SALE_PRICE = 90;
     private static final int CHAOS_RUNE_TOKKUL_SALE_PRICE = 9;
     private static final int DEATH_RUNE_TOKKUL_SALE_PRICE = 18;
     private static final int MINNOWS_PER_SHARK = 40;
@@ -217,6 +218,10 @@ class IronValueOverlay extends Overlay
         if (id == ItemID.DEATH_RUNE && config.showDeathRuneShopPrice())
         {
             addLineToOutput("Ali: " + QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_GP_SALE_PRICE) + " gp");
+        }
+        if (id == ItemID.NATURE_RUNE && config.showNatureRuneShopPrice())
+        {
+            addLineToOutput("Ali: " + QuantityFormatter.quantityToStackSize((long) qty * NATURE_RUNE_GP_SALE_PRICE) + " gp");
         }
         if (id == ItemID.MINNOW && config.showMinnowSharkConversion())
         {
