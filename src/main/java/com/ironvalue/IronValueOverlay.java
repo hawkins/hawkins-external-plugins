@@ -66,6 +66,15 @@ class IronValueOverlay extends Overlay
     private static final int STAMINAS_PER_GRACE = AMYLASE_PER_EXCHANGE / GRACE_PER_EXCHANGE;
 
 
+    private static final int IRON_ORE_TOKKUL_SALE_PRICE = 1;
+    private static final int SILVER_ORE_TOKKUL_SALE_PRICE = 7;
+    private static final int COAL_TOKKUL_SALE_PRICE = 4;
+    private static final int GOLD_ORE_TOKKUL_SALE_PRICE = 15;
+    private static final int MITHRIL_ORE_TOKKUL_SALE_PRICE = 16;
+    private static final int ADAMANTITE_ORE_TOKKUL_SALE_PRICE = 40;
+    private static final int RUNITE_ORE_TOKKUL_SALE_PRICE = 320;
+
+
     private final Client client;
     private final IronValueConfig config;
     private final TooltipManager tooltipManager;
@@ -239,6 +248,34 @@ class IronValueOverlay extends Overlay
         if (id == ItemID.DEATH_RUNE && config.showDeathRuneTokkulPrice())
         {
             addLineToOutput("Mej-Roh: " + QuantityFormatter.quantityToStackSize((long) qty * DEATH_RUNE_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+        if (id == ItemID.IRON_ORE && config.showIronOreTokkulPrice())
+        {
+            addLineToOutput("Hur-Rin: " + QuantityFormatter.quantityToStackSize((long) qty * IRON_ORE_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+        if (id == ItemID.SILVER_ORE && config.showSilverOreTokkulPrice())
+        {
+            addLineToOutput("Hur-Rin: " + QuantityFormatter.quantityToStackSize((long) qty * SILVER_ORE_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+        if (id == ItemID.COAL && config.showCoalTokkulPrice())
+        {
+            addLineToOutput("Hur-Rin: " + QuantityFormatter.quantityToStackSize((long) qty * COAL_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+        if (id == ItemID.GOLD_ORE && config.showGoldOreTokkulPrice())
+        {
+            addLineToOutput("Hur-Rin: " + QuantityFormatter.quantityToStackSize((long) qty * GOLD_ORE_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+        if (id == ItemID.MITHRIL_ORE && config.showMithrilOreTokkulPrice())
+        {
+            addLineToOutput("Hur-Rin: " + QuantityFormatter.quantityToStackSize((long) qty * MITHRIL_ORE_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+        if (id == ItemID.ADAMANTITE_ORE && config.showAdamantiteOreTokkulPrice())
+        {
+            addLineToOutput("Hur-Rin: " + QuantityFormatter.quantityToStackSize((long) qty * ADAMANTITE_ORE_TOKKUL_SALE_PRICE) + " tokkul");
+        }
+        if (id == ItemID.RUNITE_ORE && config.showRuniteOreTokkulPrice())
+        {
+            addLineToOutput("Hur-Rin: " + QuantityFormatter.quantityToStackSize((long) qty * RUNITE_ORE_TOKKUL_SALE_PRICE) + " tokkul");
         }
 
         if (stringBuilder.length() > 0)
