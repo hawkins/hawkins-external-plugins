@@ -62,6 +62,17 @@ public interface IronValueConfig extends Config
 		return true;
 	}
 
+	@ConfigItem(
+			keyName = "showNatureRuneShopPrice",
+			name = "Show Nature Rune Shop Price",
+			description = "Show the Nature Rune shop price when selling to Ali Morrisane on a tooltip",
+			section = goldPrices
+	)
+	default boolean showNatureRuneShopPrice()
+	{
+		return true;
+	}
+
 	@ConfigSection(
 			name = "Commodity Exchanges",
 			description = "Item prices when exchanging for other commodities",
