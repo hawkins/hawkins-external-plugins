@@ -126,6 +126,7 @@ public interface IronValueConfig extends Config
 	{
 		return true;
 	}
+
 	@ConfigItem(
 			keyName = "showDeathRunePrice",
 			name = "Show Death Rune to Tokkul Price",
@@ -133,6 +134,83 @@ public interface IronValueConfig extends Config
 			section = tokkulPrices
 	)
 	default boolean showDeathRuneTokkulPrice()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "showIronOreTokkulPrice",
+			name = "Show Iron Ore to Tokkul Price",
+			description = "Show the Iron Ore to Tokkul shop price when selling to TzHaar-Hur-Rin on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showIronOreTokkulPrice()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "showSilverOreTokkulPrice",
+			name = "Show Silver Ore to Tokkul Price",
+			description = "Show the Silver Ore to Tokkul shop price when selling to TzHaar-Hur-Rin on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showSilverOreTokkulPrice()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "showCoalTokkulPrice",
+			name = "Show Coal to Tokkul Price",
+			description = "Show the Coal to Tokkul shop price when selling to TzHaar-Hur-Rin on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showCoalTokkulPrice()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "showGoldOreTokkulPrice",
+			name = "Show Gold Ore to Tokkul Price",
+			description = "Show the Gold Ore to Tokkul shop price when selling to TzHaar-Hur-Rin on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showGoldOreTokkulPrice()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "showMithrilOreTokkulPrice",
+			name = "Show Mithril Ore to Tokkul Price",
+			description = "Show the Mithril Ore to Tokkul shop price when selling to TzHaar-Hur-Rin on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showMithrilOreTokkulPrice()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "showAdamantiteOreTokkulPrice",
+			name = "Show Adamantite Ore to Tokkul Price",
+			description = "Show the Adamantite Ore to Tokkul shop price when selling to TzHaar-Hur-Rin on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showAdamantiteOreTokkulPrice()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "showRuniteOreTokkulPrice",
+			name = "Show Runite Ore to Tokkul Price",
+			description = "Show the Runite Ore to Tokkul shop price when selling to TzHaar-Hur-Rin on a tooltip",
+			section = tokkulPrices
+	)
+	default boolean showRuniteOreTokkulPrice()
 	{
 		return true;
 	}
